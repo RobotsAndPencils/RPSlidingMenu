@@ -54,6 +54,10 @@ Override the following methods:
 }
 ```
 
+##Notes
+
+- In the demo I used images that were 320x210.  They just need to be big enough to cover the cells size
+
 ## Contact
 
 Follow Robots & Pencils on Twitter ([@robotsNpencils](https://twitter.com/robotsNpencils))
