@@ -11,6 +11,8 @@
 const CGFloat RPSlidingCellFeatureHeight = 240.0f;
 const CGFloat RPSlidingCellNormalHeight = 88.0f;
 const CGFloat RPSlidingCellDetailTextPadding = 20.0f;
+const CGFloat RPSlidingMenuNormalImageCoverAlpha = 0.5f;
+const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
 
 @interface RPSlidingMenuCell ()
 
@@ -34,7 +36,12 @@ const CGFloat RPSlidingCellDetailTextPadding = 20.0f;
 }
 
 
+#pragma - mark label and image view setups
+
+// We do this in code so there is no resources to bundle up
+
 - (void)setupTextLabel {
+
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     self.textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, screenRect.size.width, self.contentView.frame.size.height)];
     self.textLabel.center = self.contentView.center;
@@ -43,8 +50,6 @@ const CGFloat RPSlidingCellDetailTextPadding = 20.0f;
     self.textLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:self.textLabel];
 }
-
-
 
 - (void)setupDetailTextLabel{
 
@@ -70,7 +75,7 @@ const CGFloat RPSlidingCellDetailTextPadding = 20.0f;
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 
-
+    // add a cover that we can fade in a black tint
     self.imageCover= [[UIView alloc] initWithFrame:self.backgroundImageView.frame];
     self.imageCover.backgroundColor = [UIColor blackColor];
     self.imageCover.alpha = 0.6f;
@@ -85,26 +90,26 @@ const CGFloat RPSlidingCellDetailTextPadding = 20.0f;
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{
     
     CGFloat featureNormaHeightDifference = RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight;
+
     // how much its grown from normal to feature
     CGFloat amountGrown = RPSlidingCellFeatureHeight - self.frame.size.height;
     
     // percent of growth from normal to feature
     CGFloat percentOfGrowth = 1 - (amountGrown / featureNormaHeightDifference);
-    CGFloat scale = MAX(percentOfGrowth, .5);
-    
+    CGFloat scaleAndAlpha = MAX(percentOfGrowth, .5);
+
     // scale title as it collapses but keep origin x the same and the y location proportional to view height.  Also fade in alpha
-    self.textLabel.transform = CGAffineTransformMakeScale(scale, scale);
+    self.textLabel.transform = CGAffineTransformMakeScale(scaleAndAlpha, scaleAndAlpha);
     self.textLabel.center = self.contentView.center;
-    
+
+    // keep detail just under text label
     self.detailTextLabel.center = CGPointMake(self.center.x, self.textLabel.center.y + 40.0f);
-    
-    self.detailTextLabel.alpha = MAX(percentOfGrowth, .5);
-    
-    // when full size, alpha of imageCover should be 20%, when collapsed should be 90%
-    self.imageCover.alpha = .50f - (percentOfGrowth * .30f);
-    
+
     // its convenient to set the alpha of the fading controls to the percent of growth value
     self.detailTextLabel.alpha = percentOfGrowth;
+    
+    // when full size, alpha of imageCover should be 20%, when collapsed should be 90%
+    self.imageCover.alpha = RPSlidingMenuNormalImageCoverAlpha - (percentOfGrowth * (RPSlidingMenuNormalImageCoverAlpha - RPSlidingMenuFeaturedImageCoverAlpha));
     
 }
 

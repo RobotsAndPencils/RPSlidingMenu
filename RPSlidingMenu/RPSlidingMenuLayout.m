@@ -7,7 +7,6 @@
 //
 
 NSInteger const RPSlidingCellDragInterval = 180.0f;
-NSInteger const RPSlidingSection = 0;
 
 #import "RPSlidingMenuLayout.h"
 #import "RPSlidingMenuCell.h"
@@ -27,29 +26,29 @@ NSInteger const RPSlidingSection = 0;
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     NSInteger topIndex = [self currentCellIndex];
 
-    CGFloat interpolation =  [self currentCellIndex] - topIndex;
+    CGFloat topCellsInterpolation =  [self currentCellIndex] - topIndex;
 
     NSMutableDictionary *layoutAttributes = [NSMutableDictionary dictionary];
     NSIndexPath *indexPath;
 
     CGRect lastRect = CGRectMake(0.0F, 0.0F, screenWidth, RPSlidingCellNormalHeight);
-    NSInteger numItems = [self.collectionView numberOfItemsInSection:RPSlidingSection];
+    NSInteger numItems = [self.collectionView numberOfItemsInSection:0];
 
     for(NSInteger itemIndex = 0; itemIndex < numItems; itemIndex++){
-        indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:RPSlidingSection];
+        indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
 
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.zIndex = itemIndex;
         CGFloat yValue = 0.0f;
 
         if (indexPath.row == topIndex){
-            CGFloat yOffset = RPSlidingCellNormalHeight* interpolation;
+            CGFloat yOffset = RPSlidingCellNormalHeight*topCellsInterpolation;
             yValue = self.collectionView.contentOffset.y - yOffset;
             attributes.frame = CGRectMake(0.0f, yValue , screenWidth, RPSlidingCellFeatureHeight);
         }else if (indexPath.row == (topIndex + 1)){
             yValue = lastRect.origin.y + lastRect.size.height;
             CGFloat bottomYValue = yValue + RPSlidingCellNormalHeight;
-            CGFloat amountToGrow = MAX((RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight) * interpolation, 0);
+            CGFloat amountToGrow = MAX((RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight) *topCellsInterpolation, 0);
             CGFloat newHeight = RPSlidingCellNormalHeight + amountToGrow;
             attributes.frame = CGRectMake(0.0f, bottomYValue - newHeight, screenWidth, newHeight);
         }else{

@@ -50,7 +50,7 @@
 - (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row{
     // when a row is tapped do some action
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Row Tapped"
-                                                    message:[NSString stringWithFormat:@"Row %d tapped.", row]
+                                                    message:[NSString stringWithFormat:@"Row %ld tapped.", (long)row]
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles: nil];
