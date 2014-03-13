@@ -54,6 +54,15 @@ Override the following methods:
 }
 ```
 
+## Contact
+
+Follow Robots & Pencils on Twitter ([@robotsNpencils](https://twitter.com/robotsNpencils))
+
+### Maintainers
+
+- [Paul Thorsteinson](http://github.com/paulthorsteinson) ([@codezy](https://twitter.com/codezy))
+
+
 ## License
 
 RPSlidingMenu is available under the MIT license. See the LICENSE file for more info.
