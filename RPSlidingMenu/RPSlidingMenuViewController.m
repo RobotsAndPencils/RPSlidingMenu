@@ -16,6 +16,14 @@
 
 @implementation RPSlidingMenuViewController
 
+- (id)init {
+    self = [super initWithCollectionViewLayout:[[RPSlidingMenuLayout alloc] init]];
+    if (self) {
+        
+    }
+    return self;
+}
+
 static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 - (void)viewDidLoad{
