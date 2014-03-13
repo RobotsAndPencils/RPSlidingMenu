@@ -5,9 +5,12 @@ Pod::Spec.new do |s|
   s.author = {
     'Paul Thorsteinson' => 'paul@robotsandpencils.com'
   }
+  s.homepage     = 'https://github.com/RobotsAndPencils/RPSlidingMenu'
   s.source = {
-    :git => 'https://github.com/RobotsAndPencils/RPSlidingMenu',
+    :git => 'https://github.com/RobotsAndPencils/RPSlidingMenu.git',
     :tag => '1.0.0'
   }
   s.source_files = 'RPSlidingMenu/*.{h,m}'
+  s.license      = 'MIT'
+  s.platform     = :ios, '6.0'
 end
