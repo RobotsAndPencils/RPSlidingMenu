@@ -1,0 +1,13 @@
+Pod::Spec.new do |s|
+  s.name         = 'RPSlidingMenu'
+  s.version      = '1.0.0'
+  s.summary      = 'A collection view menu in the style of UltraVisual'
+  s.author = {
+    'Paul Thorsteinson' => 'paul@robotsandpencils.com'
+  }
+  s.source = {
+    :git => 'https://github.com/RobotsAndPencils/RPSlidingMenu',
+    :tag => '1.0.0'
+  }
+  s.source_files = 'RPSlidingMenu/*.{h,m}'
+end

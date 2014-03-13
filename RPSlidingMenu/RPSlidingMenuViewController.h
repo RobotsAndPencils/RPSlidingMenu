@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPSlidingMenuCell.h"
+
 
 @interface RPSlidingMenuViewController : UICollectionViewController
+
+- (NSInteger)numberOfItemsInSlidingMenu;
+- (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row;
+- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row;
 
 @end

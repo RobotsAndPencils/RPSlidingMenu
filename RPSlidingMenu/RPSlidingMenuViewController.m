@@ -8,28 +8,21 @@
 
 #import "RPSlidingMenuViewController.h"
 #import "RPSlidingMenuLayout.h"
-#import "RPSlidingMenuCell.h"
 
-@interface RPSlidingMenuViewController ()
+
+@interface RPSlidingMenuViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @end
 
 @implementation RPSlidingMenuViewController
 
-- (id)init {
-    self = [super initWithCollectionViewLayout:[[RPSlidingMenuLayout alloc] init]];
-    if (self) {
-
-    }
-    return self;
-}
-
-
 static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
+    
     [super viewDidLoad];
+    
+    self.collectionView.collectionViewLayout = [[RPSlidingMenuLayout alloc] init];
 
     [self.collectionView registerClass:[RPSlidingMenuCell class] forCellWithReuseIdentifier:RPSlidingCellIdentifier];
     self.navigationController.navigationBarHidden = YES;
@@ -41,21 +34,35 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 }
 
+- (NSInteger)numberOfItemsInSlidingMenu{
+    NSAssert(false, @"This method must be overriden in the subclass");
+    return 0;
+}
+
+- (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row{
+    NSAssert(false, @"This method must be overriden in the subclass");
+}
+
+- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row{
+    
+}
+
+
 #pragma mark - UICollectionViewDataSource Methods
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 15;
+    return [self numberOfItemsInSlidingMenu];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RPSlidingMenuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:RPSlidingCellIdentifier forIndexPath:indexPath];
 
-    cell.backgroundColor = (indexPath.row % 2 == 0 ? [UIColor purpleColor] : [UIColor blueColor]);
-    cell.textLabel.text = [NSString stringWithFormat:@"BehindTheScenes %d", indexPath.row];
-
-    cell.detailTextLabel.text = @"Fine fabrics, soft hardware. Garments tailored with an ease & versatility women desire.";
-    cell.image = (indexPath.row % 2 == 0 ? [UIImage imageNamed:@"Live"] : [UIImage imageNamed:@"Snapchat"]);
+    [self customizeCell:cell forRow:indexPath.row];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self slidingMenu:self didSelectItemAtRow:indexPath.row];
 }
 
 

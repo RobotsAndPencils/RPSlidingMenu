@@ -14,6 +14,6 @@ extern CGFloat const RPSlidingCellNormalHeight;
 
 @property (strong, nonatomic) UILabel *textLabel;
 @property (strong, nonatomic) UILabel *detailTextLabel;
-@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) UIImageView *backgroundImageView;
 
 @end

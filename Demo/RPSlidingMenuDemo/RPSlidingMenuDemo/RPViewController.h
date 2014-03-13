@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RPSlidingMenuViewController.h"
 
-@interface RPViewController : UIViewController
+@interface RPViewController : RPSlidingMenuViewController 
 
 @end

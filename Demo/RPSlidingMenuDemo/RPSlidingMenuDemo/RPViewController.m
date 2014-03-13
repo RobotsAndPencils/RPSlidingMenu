@@ -8,7 +8,9 @@
 
 #import "RPViewController.h"
 
+
 @interface RPViewController ()
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -17,13 +19,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - RPSlidingMenuViewController
+
+
+-(NSInteger)numberOfItemsInSlidingMenu{
+    // 10 for demo purposes, typically the count of some array
+    return 10;
 }
+
+- (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row{
+ 
+    // alternate for demo.  Simply set the properties of the passed in cell
+    if (row % 2 == 0) {
+        slidingMenuCell.textLabel.text = @"Something Special";
+        slidingMenuCell.detailTextLabel.text = @"For your loved ones!";
+        slidingMenuCell.backgroundImageView.image = [UIImage imageNamed:@"image1_320x210"];
+    }else{
+        
+        slidingMenuCell.textLabel.text = @"This Thing Too";
+        slidingMenuCell.detailTextLabel.text = @"This thing will blow your mind.";
+        slidingMenuCell.backgroundImageView.image = [UIImage imageNamed:@"image2_320x210"];
+    }
+    
+}
+
+- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row{
+    // when a row is tapped do some action
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Row Tapped"
+                                                    message:[NSString stringWithFormat:@"Row %d tapped.", row]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
+}
+
 
 @end

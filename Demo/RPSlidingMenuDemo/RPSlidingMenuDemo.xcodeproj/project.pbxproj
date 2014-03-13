@@ -21,6 +21,9 @@
 		DABF835818BC541B00A102DA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF833A18BC541B00A102DA /* UIKit.framework */; };
 		DABF836018BC541B00A102DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DABF835E18BC541B00A102DA /* InfoPlist.strings */; };
 		DABF836218BC541B00A102DA /* RPSlidingMenuDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DABF836118BC541B00A102DA /* RPSlidingMenuDemoTests.m */; };
+		DABF837218BC566300A102DA /* RPSlidingMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DABF836D18BC566300A102DA /* RPSlidingMenuCell.m */; };
+		DABF837318BC566300A102DA /* RPSlidingMenuLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DABF836F18BC566300A102DA /* RPSlidingMenuLayout.m */; };
+		DABF837418BC566300A102DA /* RPSlidingMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DABF837118BC566300A102DA /* RPSlidingMenuViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,12 @@
 		DABF835D18BC541B00A102DA /* RPSlidingMenuDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RPSlidingMenuDemoTests-Info.plist"; sourceTree = "<group>"; };
 		DABF835F18BC541B00A102DA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DABF836118BC541B00A102DA /* RPSlidingMenuDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RPSlidingMenuDemoTests.m; sourceTree = "<group>"; };
+		DABF836C18BC566300A102DA /* RPSlidingMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPSlidingMenuCell.h; sourceTree = "<group>"; };
+		DABF836D18BC566300A102DA /* RPSlidingMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPSlidingMenuCell.m; sourceTree = "<group>"; };
+		DABF836E18BC566300A102DA /* RPSlidingMenuLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPSlidingMenuLayout.h; sourceTree = "<group>"; };
+		DABF836F18BC566300A102DA /* RPSlidingMenuLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPSlidingMenuLayout.m; sourceTree = "<group>"; };
+		DABF837018BC566300A102DA /* RPSlidingMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPSlidingMenuViewController.h; sourceTree = "<group>"; };
+		DABF837118BC566300A102DA /* RPSlidingMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPSlidingMenuViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +91,7 @@
 		DABF832A18BC541B00A102DA = {
 			isa = PBXGroup;
 			children = (
+				DABF836B18BC566300A102DA /* RPSlidingMenu */,
 				DABF833C18BC541B00A102DA /* RPSlidingMenuDemo */,
 				DABF835B18BC541B00A102DA /* RPSlidingMenuDemoTests */,
 				DABF833518BC541B00A102DA /* Frameworks */,
@@ -152,6 +162,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		DABF836B18BC566300A102DA /* RPSlidingMenu */ = {
+			isa = PBXGroup;
+			children = (
+				DABF836C18BC566300A102DA /* RPSlidingMenuCell.h */,
+				DABF836D18BC566300A102DA /* RPSlidingMenuCell.m */,
+				DABF836E18BC566300A102DA /* RPSlidingMenuLayout.h */,
+				DABF836F18BC566300A102DA /* RPSlidingMenuLayout.m */,
+				DABF837018BC566300A102DA /* RPSlidingMenuViewController.h */,
+				DABF837118BC566300A102DA /* RPSlidingMenuViewController.m */,
+			);
+			name = RPSlidingMenu;
+			path = ../../RPSlidingMenu;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -197,7 +221,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = RP;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Robots and Pencils Inc.";
 				TargetAttributes = {
 					DABF835318BC541B00A102DA = {
@@ -250,9 +274,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DABF837418BC566300A102DA /* RPSlidingMenuViewController.m in Sources */,
 				DABF834718BC541B00A102DA /* RPAppDelegate.m in Sources */,
 				DABF834318BC541B00A102DA /* main.m in Sources */,
 				DABF834D18BC541B00A102DA /* RPViewController.m in Sources */,
+				DABF837218BC566300A102DA /* RPSlidingMenuCell.m in Sources */,
+				DABF837318BC566300A102DA /* RPSlidingMenuLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +333,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -345,7 +371,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -403,7 +428,6 @@
 		DABF836918BC541B00A102DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RPSlidingMenuDemo.app/RPSlidingMenuDemo";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -426,7 +450,6 @@
 		DABF836A18BC541B00A102DA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RPSlidingMenuDemo.app/RPSlidingMenuDemo";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -461,6 +484,7 @@
 				DABF836718BC541B00A102DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DABF836818BC541B00A102DA /* Build configuration list for PBXNativeTarget "RPSlidingMenuDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +493,7 @@
 				DABF836A18BC541B00A102DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

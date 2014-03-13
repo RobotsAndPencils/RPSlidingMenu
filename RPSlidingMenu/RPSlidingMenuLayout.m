@@ -70,8 +70,10 @@ NSInteger const RPSlidingSection = 0;
 
 
 - (CGSize)collectionViewContentSize{
+    
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
-    return CGSizeMake(self.collectionView.frame.size.width, numberOfItems *RPSlidingCellDragInterval);
+    CGFloat height = numberOfItems * RPSlidingCellDragInterval + RPSlidingCellFeatureHeight ;
+    return CGSizeMake(self.collectionView.frame.size.width, height);
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
