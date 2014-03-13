@@ -19,18 +19,21 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
 
 @implementation RPSlidingMenuLayout
 
+
 - (void)prepareLayout{
 
     [super prepareLayout];
 
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    NSInteger topIndex = [self currentCellIndex];
 
-    CGFloat topCellsInterpolation =  [self currentCellIndex] - topIndex;
+    NSInteger topFeatureIndex = [self currentCellIndex];
+
+    CGFloat topCellsInterpolation =  [self currentCellIndex] - topFeatureIndex;
 
     NSMutableDictionary *layoutAttributes = [NSMutableDictionary dictionary];
     NSIndexPath *indexPath;
 
+    // last rect will be used to calculate frames past the first one.  We initialize it to a non junk 0 value
     CGRect lastRect = CGRectMake(0.0F, 0.0F, screenWidth, RPSlidingCellNormalHeight);
     NSInteger numItems = [self.collectionView numberOfItemsInSection:0];
 
@@ -41,42 +44,47 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
         attributes.zIndex = itemIndex;
         CGFloat yValue = 0.0f;
 
-        if (indexPath.row == topIndex){
-            CGFloat yOffset = RPSlidingCellNormalHeight*topCellsInterpolation;
+        if (indexPath.row == topFeatureIndex){
+            // our top feature cell
+            CGFloat yOffset = RPSlidingCellNormalHeight  *topCellsInterpolation;
             yValue = self.collectionView.contentOffset.y - yOffset;
             attributes.frame = CGRectMake(0.0f, yValue , screenWidth, RPSlidingCellFeatureHeight);
-        }else if (indexPath.row == (topIndex + 1)){
+        }else if (indexPath.row == (topFeatureIndex + 1) && indexPath.row != numItems){
+            // the cell after the feature which grows into one as it goes up unless its the last cell (back to top)
             yValue = lastRect.origin.y + lastRect.size.height;
             CGFloat bottomYValue = yValue + RPSlidingCellNormalHeight;
             CGFloat amountToGrow = MAX((RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight) *topCellsInterpolation, 0);
             CGFloat newHeight = RPSlidingCellNormalHeight + amountToGrow;
             attributes.frame = CGRectMake(0.0f, bottomYValue - newHeight, screenWidth, newHeight);
         }else{
+            // all other cells above or below those on screen
             yValue = lastRect.origin.y + lastRect.size.height;
             attributes.frame = CGRectMake(0.0f, yValue, screenWidth, RPSlidingCellNormalHeight);
         }
+
         lastRect = attributes.frame;
         [layoutAttributes setObject:attributes forKey:indexPath];
     }
-
 
     self.layoutAttributes = layoutAttributes;
 }
 
 - (CGFloat)currentCellIndex{
-    return (self.collectionView.contentOffset.y /RPSlidingCellDragInterval);
+    return (self.collectionView.contentOffset.y / RPSlidingCellDragInterval);
 }
 
 
 - (CGSize)collectionViewContentSize{
-    
+
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
-    CGFloat height = numberOfItems * RPSlidingCellDragInterval + RPSlidingCellFeatureHeight ;
+    CGFloat height = (numberOfItems+1) * RPSlidingCellDragInterval + RPSlidingCellFeatureHeight ;
     return CGSizeMake(self.collectionView.frame.size.width, height);
+
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
 
+    // create layouts for the rectangles in the view
     NSMutableArray *attributesInRect =  [NSMutableArray array];
     for (UICollectionViewLayoutAttributes *attributes in [self.layoutAttributes allValues]) {
         if(CGRectIntersectsRect(rect, attributes.frame)){
@@ -89,10 +97,13 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity{
 
+    // so when a person stops dragging/flicking - we use the drag interval to determine where it will snap to
     CGFloat currentY = self.collectionView.contentOffset.y;
-    CGFloat lastPageY =   (NSInteger)(currentY /RPSlidingCellDragInterval) *RPSlidingCellDragInterval;
+    // the marker of the next drag/page intervals
+    CGFloat lastPageY =   (NSInteger)(currentY /  RPSlidingCellDragInterval) * RPSlidingCellDragInterval;
     CGFloat nextPageY =   lastPageY + RPSlidingCellDragInterval;
 
+    // snap to whichever is closest
     CGPoint restingPoint = CGPointMake(0.0f, 0.0f);
     if ((currentY - lastPageY) < (nextPageY - currentY)){
         restingPoint.y = lastPageY;
@@ -107,6 +118,7 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
     return self.layoutAttributes[indexPath];
 }
 
+// bounds change causes prepareLayout if YES
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
     return YES;
 }

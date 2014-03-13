@@ -55,7 +55,6 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
     
 }
 
-
 #pragma mark - UICollectionViewDataSource Methods
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
