@@ -5,6 +5,7 @@ A collection view menu in the style of UltraVisual.
 
 
 ![alt text](http://dl.dropboxusercontent.com/u/19170848/RPSlidingMenu_1.png "RPSlidingMenu Example")
+[![RPSlidingMenuVideo](http://img.youtube.com/vi/jUsxavJp4l8/0.jpg)](http://www.youtube.com/watch?v=jUsxavJp4l8)
 
 ## Installation
 
@@ -16,9 +17,42 @@ Add `pod 'RPSlidingMenu'` to your Podfile
 
 (see sample Xcode project in `/Demo`)
 
-Create a file that inherits from RPSlidingMenuViewController
+Create a new file that inherits from RPSlidingMenuViewController
 
-`@interface SomeViewController : RPSlidingMenuViewController`
+Override the following methods:
+```
+// return the number of menu items
+-(NSInteger)numberOfItemsInSlidingMenu;
+// set properties of the cell like the textLabel.text, detailLabel.text and backgroundImageView.image
+- (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row;
+// optionally to handle a menu item being tapped
+- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row;
+```
+
+##Example of code in .m
+```
+-(NSInteger)numberOfItemsInSlidingMenu{
+    return 10; // 10 menu items
+}
+
+- (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row{
+
+    slidingMenuCell.textLabel.text = @"Some Title";
+    slidingMenuCell.detailTextLabel.text = @"Some longer description that is like a subtitle!";
+    slidingMenuCell.backgroundImageView.image = [UIImage imageNamed:@"some_image"];
+
+}
+
+- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row{
+    // when a row is tapped do some action like go to another view controller
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Row Tapped"
+                                                    message:[NSString stringWithFormat:@"Row %d tapped.", row]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
+}
+```
 
 ## License
 
