@@ -4,8 +4,9 @@ RPSlidingMenu
 A collection view menu in the style of UltraVisual.
 
 
-![alt text](http://dl.dropboxusercontent.com/u/19170848/RPSlidingMenu_1.png "RPSlidingMenu Example")
-[![RPSlidingMenuVideo](http://img.youtube.com/vi/jUsxavJp4l8/0.jpg)](http://www.youtube.com/watch?v=jUsxavJp4l8)
+![RPSlidingMenu animated GIF](http://f.cl.ly/items/1P0l1X0D0b2k1C3T2C2o/2014-03-14%2011_39_36.gif)
+
+[Youtube Video](http://www.youtube.com/watch?v=jUsxavJp4l8)
 
 ## Installation
 
