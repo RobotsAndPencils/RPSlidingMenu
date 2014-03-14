@@ -112,6 +112,10 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     
     // percent of growth from normal to feature
     CGFloat percentOfGrowth = 1 - (amountGrown / featureNormaHeightDifference);
+    
+    //Curve the percent so that the animations move smoother
+    percentOfGrowth = sin(percentOfGrowth * M_PI_2);
+    
     CGFloat scaleAndAlpha = MAX(percentOfGrowth, .5);
 
     // scale title as it collapses but keep origin x the same and the y location proportional to view height.  Also fade in alpha
