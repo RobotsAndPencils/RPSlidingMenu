@@ -66,7 +66,8 @@ Follow Robots & Pencils on Twitter ([@robotsNpencils](https://twitter.com/robots
 ### Maintainers
 
 - [Paul Thorsteinson](http://github.com/paulthorsteinson) ([@codezy](https://twitter.com/codezy))
-
+- [Stephen Gazzard](http://github.com/stephengazzard) ([@BrokenKings](https://twitter.com/BrokenKings))
+- [Brandon Evans](http://github.com/interstateone) ([@interstateone](https://twitter.com/interstateone))
 
 ## License
 
