@@ -38,7 +38,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
 
 @implementation RPSlidingMenuCell
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
 
     self = [super initWithFrame:frame];
     if (self) {
@@ -67,7 +67,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     [self.contentView addSubview:self.textLabel];
 }
 
-- (void)setupDetailTextLabel{
+- (void)setupDetailTextLabel {
 
     NSAssert(self.textLabel != nil, @"the text label must be set up before this so it can use its frame");
     
@@ -103,7 +103,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
 }
 
 
-- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
     
     CGFloat featureNormaHeightDifference = RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight;
 
@@ -116,7 +116,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     //Curve the percent so that the animations move smoother
     percentOfGrowth = sin(percentOfGrowth * M_PI_2);
     
-    CGFloat scaleAndAlpha = MAX(percentOfGrowth, .5);
+    CGFloat scaleAndAlpha = MAX(percentOfGrowth, 0.5f);
 
     // scale title as it collapses but keep origin x the same and the y location proportional to view height.  Also fade in alpha
     self.textLabel.transform = CGAffineTransformMakeScale(scaleAndAlpha, scaleAndAlpha);

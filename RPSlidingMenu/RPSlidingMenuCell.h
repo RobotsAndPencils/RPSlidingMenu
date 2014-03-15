@@ -25,12 +25,12 @@
 /**
  The height of a RPSlidingCell when it is at it's full feature height.
  */
-extern CGFloat const RPSlidingCellFeatureHeight;
+extern const CGFloat RPSlidingCellFeatureHeight;
 
 /**
  The height of a RPSlidingCell when it is at it's normal height.
  */
-extern CGFloat const RPSlidingCellNormalHeight;
+extern const CGFloat RPSlidingCellNormalHeight;
 
 /**
  RPSlidingMenu is a subclass of UICollectionViewCell that is used for displaying rows in a RPSlidingMenuViewController.  It has a textLabel that can be set to show a header title for the cell.  It also has a detailTextLabel where a longer description can follow the textLabel header.  The backgroundImageView allows an image to be set behind it.  This cell has text that fades and shrink as it goes from feature height to normal height
