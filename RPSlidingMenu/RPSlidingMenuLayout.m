@@ -22,21 +22,21 @@
  *
  ***********************************************************************************/
 
-NSInteger const RPSlidingCellDragInterval = 180.0f;
+const CGFloat RPSlidingCellDragInterval = 180.0f;
 
 #import "RPSlidingMenuLayout.h"
 #import "RPSlidingMenuCell.h"
 
 @interface RPSlidingMenuLayout ()
 
-@property (strong, nonatomic) NSDictionary* layoutAttributes;
+@property (strong, nonatomic) NSDictionary *layoutAttributes;
 
 @end
 
 @implementation RPSlidingMenuLayout
 
 
-- (void)prepareLayout{
+- (void)prepareLayout {
 
     [super prepareLayout];
 
@@ -50,29 +50,29 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
     NSIndexPath *indexPath;
 
     // last rect will be used to calculate frames past the first one.  We initialize it to a non junk 0 value
-    CGRect lastRect = CGRectMake(0.0F, 0.0F, screenWidth, RPSlidingCellNormalHeight);
+    CGRect lastRect = CGRectMake(0.0f, 0.0f, screenWidth, RPSlidingCellNormalHeight);
     NSInteger numItems = [self.collectionView numberOfItemsInSection:0];
 
-    for(NSInteger itemIndex = 0; itemIndex < numItems; itemIndex++){
+    for (NSInteger itemIndex = 0; itemIndex < numItems; itemIndex++) {
         indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
 
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.zIndex = itemIndex;
         CGFloat yValue = 0.0f;
 
-        if (indexPath.row == topFeatureIndex){
+        if (indexPath.row == topFeatureIndex) {
             // our top feature cell
             CGFloat yOffset = RPSlidingCellNormalHeight  *topCellsInterpolation;
             yValue = self.collectionView.contentOffset.y - yOffset;
             attributes.frame = CGRectMake(0.0f, yValue , screenWidth, RPSlidingCellFeatureHeight);
-        }else if (indexPath.row == (topFeatureIndex + 1) && indexPath.row != numItems){
+        } else if (indexPath.row == (topFeatureIndex + 1) && indexPath.row != numItems) {
             // the cell after the feature which grows into one as it goes up unless its the last cell (back to top)
             yValue = lastRect.origin.y + lastRect.size.height;
             CGFloat bottomYValue = yValue + RPSlidingCellNormalHeight;
             CGFloat amountToGrow = MAX((RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight) *topCellsInterpolation, 0);
             CGFloat newHeight = RPSlidingCellNormalHeight + amountToGrow;
             attributes.frame = CGRectMake(0.0f, bottomYValue - newHeight, screenWidth, newHeight);
-        }else{
+        } else {
             // all other cells above or below those on screen
             yValue = lastRect.origin.y + lastRect.size.height;
             attributes.frame = CGRectMake(0.0f, yValue, screenWidth, RPSlidingCellNormalHeight);
@@ -85,12 +85,12 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
     self.layoutAttributes = layoutAttributes;
 }
 
-- (CGFloat)currentCellIndex{
+- (CGFloat)currentCellIndex {
     return (self.collectionView.contentOffset.y / RPSlidingCellDragInterval);
 }
 
 
-- (CGSize)collectionViewContentSize{
+- (CGSize)collectionViewContentSize {
 
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
     CGFloat height = (numberOfItems+1) * RPSlidingCellDragInterval + RPSlidingCellFeatureHeight ;
@@ -98,7 +98,7 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
 
 }
 
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
 
     // create layouts for the rectangles in the view
     NSMutableArray *attributesInRect =  [NSMutableArray array];
@@ -111,7 +111,7 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
     return attributesInRect;
 }
 
-- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity{
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
 
     // so when a person stops dragging/flicking - we use the drag interval to determine where it will snap to
     CGFloat currentY = self.collectionView.contentOffset.y;
@@ -130,12 +130,12 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
     return restingPoint;
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.layoutAttributes[indexPath];
 }
 
 // bounds change causes prepareLayout if YES
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
     return YES;
 }
 
