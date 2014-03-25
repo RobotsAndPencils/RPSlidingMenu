@@ -60,6 +60,8 @@ Override the following methods:
 
 ## Contact
 
+[![Robots & Pencils Logo](http://f.cl.ly/items/2W3n1r2R0j2p2b3n3j3c/rnplogo.png)](http://www.robotsandpencils.com)
+
 Follow Robots & Pencils on Twitter ([@robotsNpencils](https://twitter.com/robotsNpencils))
 
 ### Maintainers

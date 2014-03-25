@@ -42,7 +42,7 @@
 
 static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     
     [super viewDidLoad];
     
@@ -58,33 +58,33 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 }
 
-- (NSInteger)numberOfItemsInSlidingMenu{
-    NSAssert(false, @"This method must be overriden in the subclass");
+- (NSInteger)numberOfItemsInSlidingMenu {
+    NSAssert(NO, @"This method must be overriden in the subclass");
     return 0;
 }
 
-- (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row{
-    NSAssert(false, @"This method must be overriden in the subclass");
+- (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row {
+    NSAssert(NO, @"This method must be overriden in the subclass");
 }
 
-- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row{
+- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row {
     
 }
 
 #pragma mark - UICollectionViewDataSource Methods
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self numberOfItemsInSlidingMenu];
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RPSlidingMenuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:RPSlidingCellIdentifier forIndexPath:indexPath];
 
     [self customizeCell:cell forRow:indexPath.row];
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self slidingMenu:self didSelectItemAtRow:indexPath.row];
 }
 
