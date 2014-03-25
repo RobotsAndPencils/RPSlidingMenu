@@ -58,7 +58,7 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
 
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.zIndex = itemIndex;
-        CGFloat yValue = 0.0f;
+        NSInteger yValue = 0.0f;
 
         if (indexPath.row == topFeatureIndex){
             // our top feature cell
@@ -70,7 +70,7 @@ NSInteger const RPSlidingCellDragInterval = 180.0f;
             yValue = lastRect.origin.y + lastRect.size.height;
             CGFloat bottomYValue = yValue + RPSlidingCellNormalHeight;
             CGFloat amountToGrow = MAX((RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight) *topCellsInterpolation, 0);
-            CGFloat newHeight = RPSlidingCellNormalHeight + amountToGrow;
+            NSInteger newHeight = RPSlidingCellNormalHeight + amountToGrow;
             attributes.frame = CGRectMake(0.0f, bottomYValue - newHeight, screenWidth, newHeight);
         }else{
             // all other cells above or below those on screen
