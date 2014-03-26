@@ -104,6 +104,8 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
 
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+
+    [super applyLayoutAttributes:layoutAttributes];
     
     CGFloat featureNormaHeightDifference = RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight;
 
