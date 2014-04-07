@@ -120,14 +120,11 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     CGFloat nextPageY =   lastPageY + RPSlidingCellDragInterval;
 
     // snap to whichever is closest
-    CGPoint restingPoint = CGPointMake(0.0f, 0.0f);
-    if ((currentY - lastPageY) < (nextPageY - currentY)){
-        restingPoint.y = lastPageY;
-    }else{
-        restingPoint.y = nextPageY;
+    if (velocity.y > 0) {
+        return CGPointMake(self.collectionView.contentOffset.x, nextPageY);
+    } else {
+        return CGPointMake(self.collectionView.contentOffset.x, lastPageY);
     }
-
-    return restingPoint;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
