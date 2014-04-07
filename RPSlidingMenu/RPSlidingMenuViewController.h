@@ -58,4 +58,14 @@
  */
 - (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row;
 
+/**
+ Scrolls the cells so that the item at the index path is featured
+ 
+ @param indexPath The indexPath of the cell to feature
+ 
+ @param animated Whether or not to animate the scroll
+
+ */
+- (void)scrollToItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
+
 @end

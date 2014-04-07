@@ -68,7 +68,15 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 }
 
 - (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row {
-    
+
+}
+
+- (void)scrollToItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
+    RPSlidingMenuCell *cell = (RPSlidingMenuCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    // Only scroll if the cell is not already featured
+    if (CGRectGetHeight(cell.frame) != RPSlidingCellFeatureHeight) {
+        [self.collectionView setContentOffset:CGPointMake(0.0f, RPSlidingCellDragInterval * indexPath.row) animated:animated];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource Methods
