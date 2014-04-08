@@ -71,11 +71,11 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 }
 
-- (void)scrollToItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated {
-    RPSlidingMenuCell *cell = (RPSlidingMenuCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+- (void)scrollToRow:(NSInteger)row animated:(BOOL)animated {
+    RPSlidingMenuCell *cell = (RPSlidingMenuCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
     // Only scroll if the cell is not already featured
     if (CGRectGetHeight(cell.frame) != RPSlidingCellFeatureHeight) {
-        [self.collectionView setContentOffset:CGPointMake(0.0f, RPSlidingCellDragInterval * indexPath.row) animated:animated];
+        [self.collectionView setContentOffset:CGPointMake(0.0f, RPSlidingCellDragInterval * row) animated:animated];
     }
 }
 

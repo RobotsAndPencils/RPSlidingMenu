@@ -48,7 +48,7 @@
 
 - (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row{
     // when a row is tapped do some action
-    [slidingMenu scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] animated:YES];
+    [slidingMenu scrollToRow:row animated:YES];
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Row Tapped"
                                                     message:[NSString stringWithFormat:@"Row %ld tapped.", (long)row]
