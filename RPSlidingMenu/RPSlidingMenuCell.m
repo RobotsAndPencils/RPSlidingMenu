@@ -25,7 +25,7 @@
 #import "RPSlidingMenuCell.h"
 
 const CGFloat RPSlidingCellFeatureHeight = 240.0f;
-const CGFloat RPSlidingCellNormalHeight = 88.0f;
+const CGFloat RPSlidingCellCollapsedHeight = 88.0f;
 const CGFloat RPSlidingCellDetailTextPadding = 20.0f;
 const CGFloat RPSlidingMenuNormalImageCoverAlpha = 0.5f;
 const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
@@ -107,7 +107,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
 
     [super applyLayoutAttributes:layoutAttributes];
     
-    CGFloat featureNormaHeightDifference = RPSlidingCellFeatureHeight - RPSlidingCellNormalHeight;
+    CGFloat featureNormaHeightDifference = RPSlidingCellFeatureHeight - RPSlidingCellCollapsedHeight;
 
     // how much its grown from normal to feature
     CGFloat amountGrown = RPSlidingCellFeatureHeight - self.frame.size.height;

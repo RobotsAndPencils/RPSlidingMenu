@@ -25,10 +25,18 @@
 #import <UIKit/UIKit.h>
 #import "RPSlidingMenuCell.h"
 
+@class RPSlidingMenuLayout;
+
 /**
  RPSlidingMenuViewController is a subclass of UICollectionViewController that is supplies methods that can be overridden to supply the number of items in the menu, customize the menu cell and also to react to a menu item being tapped.
  */
 @interface RPSlidingMenuViewController : UICollectionViewController
+
+@property (nonatomic, assign, readonly) RPSlidingMenuLayout *slidingMenuLayout;
+
+@property (nonatomic) CGFloat featureHeight;
+
+@property (nonatomic) CGFloat collapsedHeight;
 
 /**
  If yes when a user taps on a collapsed row it will expand it to the feature spot. If no it remains in the same position.  Default is YES.

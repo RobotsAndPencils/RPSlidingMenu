@@ -26,27 +26,37 @@
 #import "RPSlidingMenuLayout.h"
 
 
-@interface RPSlidingMenuViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface RPSlidingMenuViewController () <UICollectionViewDataSource, UICollectionViewDelegate, RPSlidingMenuLayoutDelegate>
 
 @end
 
 @implementation RPSlidingMenuViewController
 
-- (id)init {
-    self = [super initWithCollectionViewLayout:[[RPSlidingMenuLayout alloc] init]];
-    if (self) {
-        _scrollsToCollapsedRowsOnSelection = YES;
+- (instancetype)init{
+
+    self = [super init];
+
+    if (self){
+        self.featureHeight = RPSlidingCellFeatureHeight;
+        self.collapsedHeight = RPSlidingCellCollapsedHeight;
     }
+
     return self;
 }
+
+- (void)awakeFromNib {
+    self.featureHeight = RPSlidingCellFeatureHeight;
+    self.collapsedHeight = RPSlidingCellCollapsedHeight;
+}
+
 
 static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    self.collectionView.collectionViewLayout = [[RPSlidingMenuLayout alloc] init];
+
+    self.collectionView.collectionViewLayout = [[RPSlidingMenuLayout alloc] initWithDelegate:self];
 
     [self.collectionView registerClass:[RPSlidingMenuCell class] forCellWithReuseIdentifier:RPSlidingCellIdentifier];
     self.navigationController.navigationBarHidden = YES;
@@ -57,6 +67,27 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
     }
 
 }
+
+
+#pragma mark - Properties
+
+- (RPSlidingMenuLayout *)slidingMenuLayout {
+    return (RPSlidingMenuLayout *)self.collectionView.collectionViewLayout;
+}
+
+- (void)setFeatureHeight:(CGFloat)featureHeight {
+    _featureHeight = featureHeight;
+
+    [self.collectionView setNeedsLayout];
+}
+
+- (void)setCollapsedHeight:(CGFloat)collapsedHeight {
+    _collapsedHeight = collapsedHeight;
+
+    [self.collectionView setNeedsLayout];
+}
+
+#pragma mark - Overridables
 
 - (NSInteger)numberOfItemsInSlidingMenu {
     NSAssert(NO, @"This method must be overriden in the subclass");
@@ -75,7 +106,6 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 }
 
-
 - (void)scrollToRow:(NSInteger)row animated:(BOOL)animated {
 
     NSInteger rowOffset = RPSlidingCellDragInterval * row;
@@ -87,6 +117,17 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
     [self.collectionView setContentOffset:CGPointMake(0.0f, rowOffset) animated:animated];
 
 }
+
+#pragma mark - RPSlidingMenuLayoutDelegate
+
+- (CGFloat)heightForFeatureCell {
+    return self.featureHeight;
+}
+
+- (CGFloat)heightForNormalCell {
+    return self.collapsedHeight;
+}
+
 
 #pragma mark - UICollectionViewDataSource Methods
 
