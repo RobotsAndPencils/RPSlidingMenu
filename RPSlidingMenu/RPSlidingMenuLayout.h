@@ -24,6 +24,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern const CGFloat RPSlidingCellDragInterval;
+
 /**
  RPSlidingMenuLayout is a subclass of UICollectionViewLayout that is used to determine the current layout of the RPSlidingMenu. It calculates the frames necessary to make the sliding/growing cell effect.
  */

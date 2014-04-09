@@ -31,6 +31,11 @@
 @interface RPSlidingMenuViewController : UICollectionViewController
 
 /**
+ If yes when a user taps on a collapsed row it will expand it to the feature spot. If no it remains in the same position.  Default is YES.
+ */
+@property (nonatomic) BOOL scrollsToCollapsedRowsOnSelection;
+
+/**
  Returns the number of items(cells) that are in the sliding menu.
  
  @return the number of rows desired in the RPSlidingMenu
@@ -49,7 +54,7 @@
 - (void)customizeCell:(RPSlidingMenuCell *)slidingMenuCell forRow:(NSInteger)row;
 
 /**
- Called when one of the rows in the RPSlidingMenu is tapped.
+ Called when one of the rows in the RPSlidingMenu is tapped. Requires call to super for animating to that row on collapsed selection
  
  @param slidingMenu the sliding menu that called this.
  
