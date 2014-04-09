@@ -124,7 +124,7 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
     return self.featureHeight;
 }
 
-- (CGFloat)heightForNormalCell {
+- (CGFloat)heightForCollapsedCell {
     return self.collapsedHeight;
 }
 

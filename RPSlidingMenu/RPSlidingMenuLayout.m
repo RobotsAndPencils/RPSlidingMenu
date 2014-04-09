@@ -25,6 +25,7 @@
 const CGFloat RPSlidingCellDragInterval = 180.0f;
 
 #import "RPSlidingMenuLayout.h"
+#import "RPSlidingMenuCell.h"
 
 @interface RPSlidingMenuLayout ()
 
@@ -44,7 +45,6 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     return self;
 }
 
-
 - (void)prepareLayout {
 
     [super prepareLayout];
@@ -59,11 +59,14 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     NSIndexPath *indexPath;
 
     // last rect will be used to calculate frames past the first one.  We initialize it to a non junk 0 value
-    CGRect lastRect = CGRectMake(0.0f, 0.0f, screenWidth, self.collapsedHeight);
+    CGRect lastRect = CGRectMake(0.0f, 0.0f, screenWidth, RPSlidingCellCollapsedHeight);
     NSInteger numItems = [self.collectionView numberOfItemsInSection:0];
 
     for (NSInteger itemIndex = 0; itemIndex < numItems; itemIndex++) {
         indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
+
+        CGFloat featureHeight = [self featureHeightForRow:indexPath.row];
+        CGFloat normalHeight = [self collapsedHeightForRow:indexPath.row];
 
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.zIndex = itemIndex;
@@ -71,20 +74,20 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 
         if (indexPath.row == topFeatureIndex) {
             // our top feature cell
-            CGFloat yOffset = self.collapsedHeight  *topCellsInterpolation;
+            CGFloat yOffset = normalHeight  *topCellsInterpolation;
             yValue = self.collectionView.contentOffset.y - yOffset;
-            attributes.frame = CGRectMake(0.0f, yValue , screenWidth, self.featureHeight);
+            attributes.frame = CGRectMake(0.0f, yValue , screenWidth, featureHeight);
         } else if (indexPath.row == (topFeatureIndex + 1) && indexPath.row != numItems) {
             // the cell after the feature which grows into one as it goes up unless its the last cell (back to top)
             yValue = lastRect.origin.y + lastRect.size.height;
-            CGFloat bottomYValue = yValue + self.collapsedHeight;
-            CGFloat amountToGrow = MAX((self.featureHeight - self.collapsedHeight) *topCellsInterpolation, 0);
-            NSInteger newHeight = self.collapsedHeight + amountToGrow;
+            CGFloat bottomYValue = yValue + normalHeight;
+            CGFloat amountToGrow = MAX((featureHeight - normalHeight) *topCellsInterpolation, 0);
+            NSInteger newHeight = normalHeight + amountToGrow;
             attributes.frame = CGRectMake(0.0f, bottomYValue - newHeight, screenWidth, newHeight);
         } else {
             // all other cells above or below those on screen
             yValue = lastRect.origin.y + lastRect.size.height;
-            attributes.frame = CGRectMake(0.0f, yValue, screenWidth, self.collapsedHeight);
+            attributes.frame = CGRectMake(0.0f, yValue, screenWidth, normalHeight);
         }
 
         lastRect = attributes.frame;
@@ -96,6 +99,24 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 
 - (CGFloat)currentCellIndex {
     return (self.collectionView.contentOffset.y / RPSlidingCellDragInterval);
+}
+
+- (CGFloat)featureHeightForRow:(NSInteger)row {
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(slidingMenuLayout:collapsedHeightForItemAtRow:)]){
+        return [self.delegate heightForFeatureCell];
+    }else{
+        return RPSlidingCellFeatureHeight;
+    }
+}
+
+- (CGFloat)collapsedHeightForRow:(NSInteger)row {
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(slidingMenuLayout:collapsedHeightForItemAtRow:)]){
+        return [self.delegate heightForCollapsedCell];
+    }else{
+        return RPSlidingCellCollapsedHeight;
+    }
 }
 
 

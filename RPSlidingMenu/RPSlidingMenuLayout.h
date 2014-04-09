@@ -31,7 +31,7 @@ extern const CGFloat RPSlidingCellDragInterval;
 @protocol RPSlidingMenuLayoutDelegate <NSObject>
 
 - (CGFloat)heightForFeatureCell;
-- (CGFloat)heightForNormalCell;
+- (CGFloat)heightForCollapsedCell;
 
 @end
 
