@@ -62,11 +62,11 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     CGRect lastRect = CGRectMake(0.0f, 0.0f, screenWidth, RPSlidingCellCollapsedHeight);
     NSInteger numItems = [self.collectionView numberOfItemsInSection:0];
 
+    CGFloat featureHeight = [self featureHeight];
+    CGFloat normalHeight = [self collapsedHeight];
+
     for (NSInteger itemIndex = 0; itemIndex < numItems; itemIndex++) {
         indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
-
-        CGFloat featureHeight = [self featureHeightForRow:indexPath.row];
-        CGFloat normalHeight = [self collapsedHeightForRow:indexPath.row];
 
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.zIndex = itemIndex;
@@ -101,18 +101,18 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     return (self.collectionView.contentOffset.y / RPSlidingCellDragInterval);
 }
 
-- (CGFloat)featureHeightForRow:(NSInteger)row {
+- (CGFloat)featureHeight{
 
-    if (self.delegate && [self.delegate respondsToSelector:@selector(slidingMenuLayout:collapsedHeightForItemAtRow:)]){
+    if (self.delegate && [self.delegate respondsToSelector:@selector(heightForFeatureCell)]){
         return [self.delegate heightForFeatureCell];
     }else{
         return RPSlidingCellFeatureHeight;
     }
 }
 
-- (CGFloat)collapsedHeightForRow:(NSInteger)row {
+- (CGFloat)collapsedHeight{
 
-    if (self.delegate && [self.delegate respondsToSelector:@selector(slidingMenuLayout:collapsedHeightForItemAtRow:)]){
+    if (self.delegate && [self.delegate respondsToSelector:@selector(heightForCollapsedCell)]){
         return [self.delegate heightForCollapsedCell];
     }else{
         return RPSlidingCellCollapsedHeight;
@@ -123,7 +123,7 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 - (CGSize)collectionViewContentSize {
 
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
-    CGFloat height = (numberOfItems+1) * RPSlidingCellDragInterval + self.featureHeight ;
+    CGFloat height = (numberOfItems+1) * RPSlidingCellDragInterval + [self featureHeight] ;
     return CGSizeMake(self.collectionView.frame.size.width, height);
 
 }

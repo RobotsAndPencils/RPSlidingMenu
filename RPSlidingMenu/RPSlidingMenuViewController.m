@@ -37,8 +37,9 @@
     self = [super init];
 
     if (self){
-        self.featureHeight = RPSlidingCellFeatureHeight;
-        self.collapsedHeight = RPSlidingCellCollapsedHeight;
+        _featureHeight = RPSlidingCellFeatureHeight;
+        _collapsedHeight = RPSlidingCellCollapsedHeight;
+        _scrollsToCollapsedRowsOnSelection = YES;
     }
 
     return self;
@@ -47,6 +48,7 @@
 - (void)awakeFromNib {
     self.featureHeight = RPSlidingCellFeatureHeight;
     self.collapsedHeight = RPSlidingCellCollapsedHeight;
+    self.scrollsToCollapsedRowsOnSelection = YES;
 }
 
 
@@ -66,25 +68,6 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
 
-}
-
-
-#pragma mark - Properties
-
-- (RPSlidingMenuLayout *)slidingMenuLayout {
-    return (RPSlidingMenuLayout *)self.collectionView.collectionViewLayout;
-}
-
-- (void)setFeatureHeight:(CGFloat)featureHeight {
-    _featureHeight = featureHeight;
-
-    [self.collectionView setNeedsLayout];
-}
-
-- (void)setCollapsedHeight:(CGFloat)collapsedHeight {
-    _collapsedHeight = collapsedHeight;
-
-    [self.collectionView setNeedsLayout];
 }
 
 #pragma mark - Overridables

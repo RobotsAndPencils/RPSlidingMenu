@@ -32,10 +32,14 @@
  */
 @interface RPSlidingMenuViewController : UICollectionViewController
 
-@property (nonatomic, assign, readonly) RPSlidingMenuLayout *slidingMenuLayout;
-
+/**
+ The height cells should be when featured.  Defaults to RPSlidingCellFeatureHeight
+ */
 @property (nonatomic) CGFloat featureHeight;
 
+/**
+ The height cells should be when collapsed.  Defaults to RPSlidingCellCollapsedHeight
+ */
 @property (nonatomic) CGFloat collapsedHeight;
 
 /**

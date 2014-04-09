@@ -42,10 +42,6 @@ extern const CGFloat RPSlidingCellDragInterval;
 
 - (instancetype)initWithDelegate:(id<RPSlidingMenuLayoutDelegate>)delegate;
 
-@property (nonatomic) CGFloat featureHeight;
-
-@property (nonatomic) CGFloat collapsedHeight;
-
 @property (nonatomic, assign) id <RPSlidingMenuLayoutDelegate> delegate;
 
 @end

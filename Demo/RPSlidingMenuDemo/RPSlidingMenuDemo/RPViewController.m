@@ -20,8 +20,8 @@
     [super viewDidLoad];
 
     // Example of changing the feature height and collapsed height for all
-    //self.slidingMenuLayout.featureHeight = 100.0f;
-    //self.slidingMenuLayout.collapsedHeight = 30.0f;
+    //self.featureHeight = 200.0f;
+    //self.collapsedHeight = 100.0f;
 }
 
 
