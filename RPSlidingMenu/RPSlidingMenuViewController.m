@@ -35,7 +35,7 @@
 - (id)init {
     self = [super initWithCollectionViewLayout:[[RPSlidingMenuLayout alloc] init]];
     if (self) {
-        
+        _scrollsToCollapsedRowsOnSelection = YES;
     }
     return self;
 }
@@ -68,7 +68,24 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 }
 
 - (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row {
-    
+
+    if (self.scrollsToCollapsedRowsOnSelection){
+        [self scrollToRow:row animated:YES];
+    }
+
+}
+
+
+- (void)scrollToRow:(NSInteger)row animated:(BOOL)animated {
+
+    NSInteger rowOffset = RPSlidingCellDragInterval * row;
+
+    // do not need to flip to that row if already on it
+    if (self.collectionView.contentOffset.y == rowOffset) return;
+
+    // show the category they picked
+    [self.collectionView setContentOffset:CGPointMake(0.0f, rowOffset) animated:animated];
+
 }
 
 #pragma mark - UICollectionViewDataSource Methods
