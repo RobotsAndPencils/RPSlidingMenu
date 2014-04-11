@@ -142,7 +142,7 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 }
 
 
-- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity{
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
     
     CGFloat proposedPageIndex = proposedContentOffset.y /  RPSlidingCellDragInterval;
     CGFloat nearestPageOffset = roundf(proposedPageIndex) * RPSlidingCellDragInterval;
