@@ -141,20 +141,13 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     return attributesInRect;
 }
 
+
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
-
-    // so when a person stops dragging/flicking - we use the drag interval to determine where it will snap to
-    CGFloat currentY = self.collectionView.contentOffset.y;
-    // the marker of the next drag/page intervals
-    CGFloat lastPageY =   (NSInteger)(currentY /  RPSlidingCellDragInterval) * RPSlidingCellDragInterval;
-    CGFloat nextPageY =   lastPageY + RPSlidingCellDragInterval;
-
-    // snap to whichever is closest
-    if (velocity.y > 0) {
-        return CGPointMake(self.collectionView.contentOffset.x, nextPageY);
-    } else {
-        return CGPointMake(self.collectionView.contentOffset.x, lastPageY);
-    }
+    
+    CGFloat proposedPageIndex = roundf(proposedContentOffset.y / RPSlidingCellDragInterval);
+    CGFloat nearestPageOffset = proposedPageIndex * RPSlidingCellDragInterval;
+    
+    return CGPointMake(0.0f, nearestPageOffset);
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
