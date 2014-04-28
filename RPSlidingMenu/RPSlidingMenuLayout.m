@@ -123,7 +123,7 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 - (CGSize)collectionViewContentSize {
 
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
-    CGFloat height = (numberOfItems+1) * RPSlidingCellDragInterval + [self featureHeight] ;
+    CGFloat height = (numberOfItems * RPSlidingCellDragInterval) + (self.collectionView.frame.size.height - RPSlidingCellDragInterval);
     return CGSizeMake(self.collectionView.frame.size.width, height);
 
 }
