@@ -91,7 +91,16 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 - (void)scrollToRow:(NSInteger)row animated:(BOOL)animated {
 
-    NSInteger rowOffset = RPSlidingCellDragInterval * row;
+    NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
+    
+    CGFloat totalComputedHeight = ([self collapsedHeight] * (totalItem-1)) + [self featureHeight];
+    
+    
+    CGFloat yOffsetMax = totalComputedHeight - self.collectionView.bounds.size.height;
+    CGFloat realItemOffset = yOffsetMax / totalItem;
+
+    
+    NSInteger rowOffset = realItemOffset * row;
 
     // do not need to flip to that row if already on it
     if (self.collectionView.contentOffset.y == rowOffset) return;
