@@ -72,9 +72,9 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     
     CGFloat featureOffset = itemIndexOffset;
     NSInteger featureIndex = featureOffset;
-    
-    CGFloat topCellsInterpolation = featureOffset - featureIndex;
-    
+    double unused;
+    CGFloat topCellsInterpolation = modf(featureOffset, &unused);
+
     //NSLog(@"%f %d %f", featureOffset, featureIndex, topCellsInterpolation);
     
     NSMutableDictionary *layoutAttributes = [NSMutableDictionary dictionary];
@@ -161,7 +161,6 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 }
 
 -(CGPoint) targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
-    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     
     NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
     

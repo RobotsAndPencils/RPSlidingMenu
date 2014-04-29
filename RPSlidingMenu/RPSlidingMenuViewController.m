@@ -93,10 +93,7 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
     NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
     
-    CGFloat totalComputedHeight = ([self collapsedHeight] * (totalItem-1)) + [self featureHeight];
-    
-    
-    CGFloat yOffsetMax = totalComputedHeight - self.collectionView.bounds.size.height;
+    CGFloat yOffsetMax = self.collectionView.contentSize.height - self.collectionView.bounds.size.height;
     CGFloat realItemOffset = yOffsetMax / totalItem;
 
     
