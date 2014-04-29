@@ -31,6 +31,9 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 
 @property (strong, nonatomic) NSDictionary *layoutAttributes;
 
+@property (assign, nonatomic) CGFloat contentHeight;
+@property (assign, nonatomic) NSInteger contentIndex;
+
 @end
 
 @implementation RPSlidingMenuLayout
@@ -50,55 +53,74 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     [super prepareLayout];
 
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    
+    NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
+    
+    CGFloat totalComputedHeight = ([self collapsedHeight] * (totalItem-1)) + [self featureHeight];
+    
+    
+    CGFloat yOffsetMax = totalComputedHeight - self.collectionView.bounds.size.height;
+    CGFloat realItemOffset = yOffsetMax / totalItem;
+    
+    
+    CGFloat itemIndexOffset = self.collectionView.contentOffset.y / realItemOffset;
+    
 
-    NSInteger topFeatureIndex = [self currentCellIndex];
-
-    CGFloat topCellsInterpolation =  [self currentCellIndex] - topFeatureIndex;
-
+    if(itemIndexOffset > totalItem-1) return;
+    if(itemIndexOffset < 0) return;
+    
+    
+    CGFloat featureOffset = itemIndexOffset;
+    NSInteger featureIndex = featureOffset;
+    
+    CGFloat topCellsInterpolation = featureOffset - featureIndex;
+    
+    NSLog(@"%f %d %f", featureOffset, featureIndex, topCellsInterpolation);
+    
     NSMutableDictionary *layoutAttributes = [NSMutableDictionary dictionary];
-    NSIndexPath *indexPath;
-
-    // last rect will be used to calculate frames past the first one.  We initialize it to a non junk 0 value
-    CGRect lastRect = CGRectMake(0.0f, 0.0f, screenWidth, RPSlidingCellCollapsedHeight);
-    NSInteger numItems = [self.collectionView numberOfItemsInSection:0];
 
     CGFloat featureHeight = [self featureHeight];
     CGFloat normalHeight = [self collapsedHeight];
 
-    for (NSInteger itemIndex = 0; itemIndex < numItems; itemIndex++) {
-        indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
+    CGFloat totalHeight = 0.0f;
+    
+    for (NSInteger itemIndex = 0; itemIndex < totalItem; itemIndex++) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
 
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.zIndex = itemIndex;
-        NSInteger yValue = 0.0f;
-
-        if (indexPath.row == topFeatureIndex) {
-            // our top feature cell
-            CGFloat yOffset = normalHeight  *topCellsInterpolation;
-            yValue = self.collectionView.contentOffset.y - yOffset;
-            attributes.frame = CGRectMake(0.0f, yValue , screenWidth, featureHeight);
-        } else if (indexPath.row == (topFeatureIndex + 1) && indexPath.row != numItems) {
-            // the cell after the feature which grows into one as it goes up unless its the last cell (back to top)
-            yValue = lastRect.origin.y + lastRect.size.height;
-            CGFloat bottomYValue = yValue + normalHeight;
-            CGFloat amountToGrow = MAX((featureHeight - normalHeight) *topCellsInterpolation, 0);
-            NSInteger newHeight = normalHeight + amountToGrow;
-            attributes.frame = CGRectMake(0.0f, bottomYValue - newHeight, screenWidth, newHeight);
-        } else {
-            // all other cells above or below those on screen
-            yValue = lastRect.origin.y + lastRect.size.height;
-            attributes.frame = CGRectMake(0.0f, yValue, screenWidth, normalHeight);
+        
+        
+        CGFloat height = normalHeight;
+        if(itemIndex == featureIndex) {
+            height = featureHeight - ((featureHeight-normalHeight)*topCellsInterpolation);
+        } else if(itemIndex == featureIndex+1) {
+            height = normalHeight + ((featureHeight-normalHeight)*topCellsInterpolation);
         }
-
-        lastRect = attributes.frame;
+        
+        attributes.frame = CGRectMake(0, totalHeight, screenWidth, height);
+        
+        totalHeight = totalHeight+height;
+        
         [layoutAttributes setObject:attributes forKey:indexPath];
     }
+    
+    self.contentHeight = totalHeight;
 
     self.layoutAttributes = layoutAttributes;
+    
+    self.contentIndex = featureIndex;
 }
 
 - (CGFloat)currentCellIndex {
-    return (self.collectionView.contentOffset.y / RPSlidingCellDragInterval);
+    NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
+    CGFloat totalComputedHeight = ([self collapsedHeight] * (totalItem-1)) + [self featureHeight];
+    CGFloat itemHeightMoy = totalComputedHeight / totalItem;
+    
+    CGFloat itemIndexOffset = self.collectionView.contentOffset.y / itemHeightMoy;
+    
+
+    return itemIndexOffset;
 }
 
 - (CGFloat)featureHeight{
@@ -122,10 +144,7 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 
 - (CGSize)collectionViewContentSize {
 
-    NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
-    CGFloat height = (numberOfItems) * RPSlidingCellDragInterval + [self featureHeight] ;
-    return CGSizeMake(self.collectionView.frame.size.width, height);
-
+    return CGSizeMake(self.collectionView.frame.size.width, self.contentHeight);
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -141,14 +160,31 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     return attributesInRect;
 }
 
+-(CGPoint) targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    
+    NSInteger totalItem = [self.collectionView numberOfItemsInSection:0];
+    
+    CGFloat totalComputedHeight = ([self collapsedHeight] * (totalItem-1)) + [self featureHeight];
+    
+    
+    CGFloat yOffsetMax = totalComputedHeight - self.collectionView.bounds.size.height;
+    CGFloat realItemOffset = yOffsetMax / totalItem;
+    
+    CGFloat res = proposedContentOffset.y / realItemOffset;
+    double unused;
+    if(modf(res, &unused) > 0.5) {
+        res = ceil(res);
+    } else {
+        res = floor(res);
+    }
+    
+    CGFloat yOffset = res * realItemOffset;
+    
+    return CGPointMake(proposedContentOffset.x, yOffset);
 
-- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
-    
-    CGFloat proposedPageIndex = roundf(proposedContentOffset.y / RPSlidingCellDragInterval);
-    CGFloat nearestPageOffset = proposedPageIndex * RPSlidingCellDragInterval;
-    
-    return CGPointMake(0.0f, nearestPageOffset);
 }
+//}
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.layoutAttributes[indexPath];
