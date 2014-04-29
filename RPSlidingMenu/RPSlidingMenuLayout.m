@@ -75,7 +75,7 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     
     CGFloat topCellsInterpolation = featureOffset - featureIndex;
     
-    NSLog(@"%f %d %f", featureOffset, featureIndex, topCellsInterpolation);
+    //NSLog(@"%f %d %f", featureOffset, featureIndex, topCellsInterpolation);
     
     NSMutableDictionary *layoutAttributes = [NSMutableDictionary dictionary];
 
