@@ -33,7 +33,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
 @interface RPSlidingMenuCell ()
 
 @property (strong, nonatomic) UIView *imageCover;
-
+@property (strong, nonatomic) UIView* separator;
 @end
 
 @implementation RPSlidingMenuCell
@@ -46,6 +46,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
         [self setupTextLabel];
         [self setupDetailTextLabel];
         [self setupImageView];
+        [self setupSeparator];
     }
 
     return self;
@@ -99,7 +100,13 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     [self.backgroundImageView addSubview:self.imageCover];
     [self.contentView insertSubview:self.backgroundImageView atIndex:0];
     [self.contentView insertSubview:self.imageCover atIndex:1];
+}
 
+-(void) setupSeparator {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, RPSlidingCellFeatureHeight-4, screenRect.size.width, 4)];
+    self.separator.backgroundColor = [UIColor blackColor];
+    [self.contentView insertSubview:self.separator atIndex:1];
 }
 
 
@@ -132,6 +139,10 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     
     // when full size, alpha of imageCover should be 20%, when collapsed should be 90%
     self.imageCover.alpha = RPSlidingMenuNormalImageCoverAlpha - (percentOfGrowth * (RPSlidingMenuNormalImageCoverAlpha - RPSlidingMenuFeaturedImageCoverAlpha));
+    
+    CGRect frame = self.separator.frame;
+    frame.origin.y = layoutAttributes.frame.size.height-4;
+    self.separator.frame = frame;
     
 }
 
