@@ -49,7 +49,13 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
 
     [super prepareLayout];
 
-    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat screenWidth;
+    if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+        screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    }
+    else {
+        screenWidth = [[UIScreen mainScreen] bounds].size.height;
+    }
 
     NSInteger topFeatureIndex = [self currentCellIndex];
 
