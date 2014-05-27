@@ -50,7 +50,8 @@ const CGFloat RPSlidingCellDragInterval = 180.0f;
     [super prepareLayout];
 
     CGFloat screenWidth;
-    if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
         screenWidth = [[UIScreen mainScreen] bounds].size.width;
     }
     else {
