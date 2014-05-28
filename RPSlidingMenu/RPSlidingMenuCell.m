@@ -24,16 +24,16 @@
 
 #import "RPSlidingMenuCell.h"
 
-const CGFloat RPSlidingCellFeatureHeight = 240.0f;
+const CGFloat RPSlidingCellFeatureHeight = 350.0f;
 const CGFloat RPSlidingCellCollapsedHeight = 88.0f;
 const CGFloat RPSlidingCellDetailTextPadding = 20.0f;
 const CGFloat RPSlidingMenuNormalImageCoverAlpha = 0.5f;
-const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
+const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.0f;
 
 @interface RPSlidingMenuCell ()
 
 @property (strong, nonatomic) UIView *imageCover;
-
+@property (strong, nonatomic) UIView* separator;
 @end
 
 @implementation RPSlidingMenuCell
@@ -46,6 +46,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
         [self setupTextLabel];
         [self setupDetailTextLabel];
         [self setupImageView];
+        [self setupSeparator];
     }
 
     return self;
@@ -99,7 +100,13 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     [self.backgroundImageView addSubview:self.imageCover];
     [self.contentView insertSubview:self.backgroundImageView atIndex:0];
     [self.contentView insertSubview:self.imageCover atIndex:1];
+}
 
+-(void) setupSeparator {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    self.separator = [[UIView alloc] initWithFrame:CGRectMake(0, RPSlidingCellFeatureHeight-4, screenRect.size.width, 4)];
+    self.separator.backgroundColor = [UIColor blackColor];
+    [self.contentView insertSubview:self.separator atIndex:1];
 }
 
 
@@ -129,9 +136,14 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
 
     // its convenient to set the alpha of the fading controls to the percent of growth value
     self.detailTextLabel.alpha = percentOfGrowth;
-    
+    self.textLabel.alpha = 1.0 - (percentOfGrowth*1.2);
+		
     // when full size, alpha of imageCover should be 20%, when collapsed should be 90%
     self.imageCover.alpha = RPSlidingMenuNormalImageCoverAlpha - (percentOfGrowth * (RPSlidingMenuNormalImageCoverAlpha - RPSlidingMenuFeaturedImageCoverAlpha));
+    
+    CGRect frame = self.separator.frame;
+    frame.origin.y = layoutAttributes.frame.size.height-4;
+    self.separator.frame = frame;
     
 }
 

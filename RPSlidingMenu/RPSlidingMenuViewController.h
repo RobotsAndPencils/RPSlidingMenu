@@ -75,4 +75,5 @@
  */
 - (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row;
 
+- (void)scrollToRow:(NSInteger)row animated:(BOOL)animated;
 @end
