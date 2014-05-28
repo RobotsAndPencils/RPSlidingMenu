@@ -136,7 +136,8 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.0f;
 
     // its convenient to set the alpha of the fading controls to the percent of growth value
     self.detailTextLabel.alpha = percentOfGrowth;
-    
+    self.textLabel.alpha = 1.0 - (percentOfGrowth*1.2);
+		
     // when full size, alpha of imageCover should be 20%, when collapsed should be 90%
     self.imageCover.alpha = RPSlidingMenuNormalImageCoverAlpha - (percentOfGrowth * (RPSlidingMenuNormalImageCoverAlpha - RPSlidingMenuFeaturedImageCoverAlpha));
     
