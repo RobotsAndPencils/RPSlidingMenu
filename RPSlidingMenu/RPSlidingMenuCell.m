@@ -89,7 +89,7 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     self.backgroundImageView.clipsToBounds = YES;
     self.backgroundImageView.center = self.contentView.center;
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    self.backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
     // add a cover that we can fade in a black tint
     self.imageCover = [[UIView alloc] initWithFrame:self.backgroundImageView.frame];
