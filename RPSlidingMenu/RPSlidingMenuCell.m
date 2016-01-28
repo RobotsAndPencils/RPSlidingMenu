@@ -64,6 +64,8 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     self.textLabel.font = [UIFont boldSystemFontOfSize:32.0];
     self.textLabel.textColor = [UIColor whiteColor];
     self.textLabel.textAlignment = NSTextAlignmentCenter;
+    self.textLabel.minimumScaleFactor = 0.1f;
+    self.textLabel.adjustsFontSizeToFitWidth = YES;
     [self.contentView addSubview:self.textLabel];
 }
 
@@ -77,6 +79,8 @@ const CGFloat RPSlidingMenuFeaturedImageCoverAlpha = 0.2f;
     self.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.detailTextLabel.numberOfLines = 0;
     self.detailTextLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+    self.detailTextLabel.minimumScaleFactor = 0.1f;
+    self.detailTextLabel.adjustsFontSizeToFitWidth = YES;
     self.detailTextLabel.textColor = [UIColor whiteColor];
     self.detailTextLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:self.detailTextLabel];
