@@ -83,11 +83,25 @@ static NSString *RPSlidingCellIdentifier = @"RPSlidingCellIdentifier";
 
 - (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row {
 
+    NSInteger rowOffset = RPSlidingCellDragInterval * row;
+    if (self.collectionView.contentOffset.y == rowOffset){
+        [self slidingMenu:slidingMenu didSelectItemAtRow:row isCollapsedState:NO];
+    }else{
+        [self slidingMenu:slidingMenu didSelectItemAtRow:row isCollapsedState:YES];
+    }
+
     if (self.scrollsToCollapsedRowsOnSelection){
         [self scrollToRow:row animated:YES];
     }
 
 }
+
+//click event for different state
+- (void)slidingMenu:(RPSlidingMenuViewController *)slidingMenu didSelectItemAtRow:(NSInteger)row isCollapsedState:(BOOL)collapsed
+{
+    
+}
+
 
 - (void)scrollToRow:(NSInteger)row animated:(BOOL)animated {
 
